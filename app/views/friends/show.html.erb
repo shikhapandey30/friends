@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @friend.name %>
+</p>
+
+
+
+<p>
+  <strong>Image:</strong>
+  <%= image_tag @friend.image_url.to_s %>
+
+  
+</p>
+
+<%#= link_to 'Edit', edit_friend_path(@friend) %> 
+<%= link_to 'Back', friends_path %>
