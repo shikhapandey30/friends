@@ -4,7 +4,7 @@
       <%= user.email %> |
       <%if Frind.where(user_id:current_user.id,friend_id: user.id,accepted: false).present? %>
       Request Sent
-      <%elsif Frind.where(user_id:current_user.id,friend_id: user.id,accepted:true).present? %>
+      <%elsif Frind.where(user_id:current_user.id,friend_id: user.id,accepted: true).present? %>
       Friend
       <%else %>
       <%= link_to "Add Friend", frinds_path(friend_id: user), method: :post %>
@@ -12,12 +12,14 @@
     </li>
   <% end %>
 </ul>
+  # Here is a list of your pending requests
 <ul>
-    <% current_user.requested_frinds.each do |request| %>
+
+  <% current_user.received_frinds.each do |f_request| %>
     <li>
-      <%= request.name %>
-      <%= link_to "Accept",  frind_path(id: request.id), method: "put" %>
-      <%= link_to "Decline", frind_path(id: request.id), method: :delete %>
+      <%= f_request.user.email %>
+      <%= link_to "Accept", frind_path(id: f_request.id), method: "put" %>
+      <%= link_to "Decline", frinds_path(id: f_request.id), method: :delete %>
     </li>
   <% end %>
 </ul>

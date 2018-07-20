@@ -15,13 +15,13 @@ class User < ApplicationRecord
 # to call all your friends
     
 
-	def frinds
-	  active_frinds | received_frinds
+	def friends
+	  active_friends | received_friends
 	end
 
 # to call your pending sent or received
 
 	def pending
-		pending_frinds | requested_frinds
+		pending_friends | requested_frinds
     end		
 end

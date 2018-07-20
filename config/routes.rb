@@ -7,9 +7,11 @@ Rails.application.routes.draw do
   resources :friends
   devise_for :users
   get 'welcome/index'
-  root 'friends#index'
-  get 'frinds/whatever'
+  root 'frinds#whatever'
+  
+
   #root 'frinds#whatever'
 
   resources :frinds, only: [:create, :update, :destroy]
+  get 'frinds/whatever'
 end

@@ -1,4 +1,5 @@
 class Frind < ApplicationRecord
-	belongs_to :user
-	belongs_to :friend, class_name: "User"
+	belongs_to :user, optional: true
+	belongs_to :frind, class_name: "User", optional: true 
+	
 end

@@ -1,9 +1,10 @@
 class FrindsController < ApplicationController
+	before_action :authenticate_user!
 
-	
-
-  def create
+	def create
+		
 	  @frind = current_user.frinds.build(friend_id: params[:friend_id])
+	  @frind.accepted = false
 	  if @frind.save
 	    flash[:notice] = "Friend requested."
 	    redirect_to "/frinds/whatever"
@@ -14,8 +15,12 @@ class FrindsController < ApplicationController
 	end
 
 	def update
-		@frind = frind.find_by(id: params[:id])
-		@frind.update(status: "accepted")
+
+		@frind = Frind.find_by(id: params[:id])
+		
+     
+		 @frind.update(accepted: true)
+      
 	  if @frind.save
 	    redirect_to root_url, notice: "Successfully confirmed friend!"
 	  else
@@ -24,7 +29,7 @@ class FrindsController < ApplicationController
 	end
 
 	def destroy
-	  @frind = frind.find_by(id: params[:id])
+	  @frind = Frind.find_by(id: params[:id])
 	  @frind.destroy
 	  flash[:notice] = "Removed frind."
 	  redirect_to :back
@@ -32,7 +37,11 @@ class FrindsController < ApplicationController
 
   def whatever
   	@users= User.all
-  end    
+  end
+   
+  
 
-
+	def frind_params
+	      params.require(:frinds).permit(:friend_id, :user_id, :accepted)
+	end 
 end
