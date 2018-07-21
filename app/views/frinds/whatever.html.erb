@@ -1,25 +1,49 @@
-<ul>
-  <% @users.each do |user| %>
-    <li>
-      <%= user.email %> |
-      <%if Frind.where(user_id:current_user.id,friend_id: user.id,accepted: false).present? %>
-      Request Sent
-      <%elsif Frind.where(user_id:current_user.id,friend_id: user.id,accepted: true).present? %>
-      Friend
-      <%else %>
-      <%= link_to "Add Friend", frinds_path(friend_id: user), method: :post %>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
-  # Here is a list of your pending requests
-<ul>
+<html>
+  <body>
+     <table align="center" border="2px">
+      <td>
+        <button type="button"
+          onclick="document.getElementById('date_time_button').innerHTML = Date()">
+          Click and see Date and Time.
+        </button>
 
-  <% current_user.received_frinds.each do |f_request| %>
-    <li>
-      <%= f_request.user.email %>
-      <%= link_to "Accept", frind_path(id: f_request.id), method: "put" %>
-      <%= link_to "Decline", frinds_path(id: f_request.id), method: :delete %>
-    </li>
-  <% end %>
-</ul>
+        <p id="date_time_button"></p>
+      </td>
+    </table>
+       <% if @users.blank? %>
+      <h4>Result can not found <%= params[:search] %>.</h4>
+    <% end %>
+    <ul>
+      <% @users.each do |user| %>
+        <li>
+          <%= user.email %> |
+          <% if Frind.where(user_id: [current_user.id, user.id],friend_id: [current_user.id, user.id], accepted: false).present? %>
+            Request Sent
+          <% elsif Frind.where(user_id: [current_user.id, user.id],friend_id: [current_user.id, user.id], accepted: true).present? %>
+            Friend
+          <%else %>
+            <%= link_to "Add Friend", frinds_path(friend_id: user), method: :post %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+      # Here is a list of your pending requests
+    <ul>
+        
+      <% current_user.received_frinds.each do |f_request| %>
+        <li>
+          
+          <%= f_request.user.email %>
+          <%= link_to "Accept", frind_path(id: f_request.id), method: "put", onclick: "this.innerHTML='Done!'" %>
+          <%= link_to "Decline", frind_path(id: f_request.id), method: :delete %>
+        </li>
+      <% end %>
+    </ul>
+    
+    <script>
+      function changeText(id) {
+          id.innerHTML = "Done!";
+      }
+    </script>
+  </body>
+</html>

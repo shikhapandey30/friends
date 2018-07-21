@@ -23,5 +23,9 @@ class User < ApplicationRecord
 
 	def pending
 		pending_friends | requested_frinds
-    end		
+  end
+
+  def self.search(search)
+      where("email LIKE ?" , "%#{search}%") 
+   end		
 end

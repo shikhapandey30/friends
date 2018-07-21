@@ -10,7 +10,10 @@
   </head>
 
   <body>
-    
+      <%= form_tag(frinds_whatever_path, :method => "get", id: "search-form") do %>
+           <%= text_field_tag :search, params[:search], placeholder: "Search friends" %>
+           <%= submit_tag "Search", :email => nil, class: "btn btn-info" %>
+      <% end %>
 
     <div id="user_nav">
       <% if user_signed_in? %>
@@ -21,7 +24,8 @@
       <% end %>
     </div>
 
-
+     
     <%= yield %>
+    
   </body>
 </html>
