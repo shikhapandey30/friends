@@ -42,6 +42,7 @@ class FrindsController < ApplicationController
 	end
 
   def whatever
+  	
     @users= User.all
     if params[:search]
       @users = User.search(params[:search]).order("created_at DESC")

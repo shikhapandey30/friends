@@ -11,8 +11,7 @@ class User < ApplicationRecord
 	has_many :received_friends, -> { where(frinds: { accepted: true}) }, through: :received_frinds, source: :user
 	has_many :pending_friends, -> { where(frinds: { accepted: false}) }, through: :frinds, source: :friend
 	has_many :requested_frinds, -> { where(frinds: { accepted: false}) }, through: :received_frinds, source: :user
-
-# to call all your friends
+    # has_many  :all_except, ->(user) { where.not(id: user) && where.not(id: user.friends)}# to call all your friends
     
 
 	def friends
@@ -27,5 +26,10 @@ class User < ApplicationRecord
 
   def self.search(search)
       where("email LIKE ?" , "%#{search}%") 
+   end
+   
+
+   def friend_with?(other_user)
+  	frinds.find_by(friend_id: other_user.id)
    end		
 end

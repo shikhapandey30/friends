@@ -1,49 +1,40 @@
 <html>
   <body>
-     <table align="center" border="2px">
-      <td>
-        <button type="button"
-          onclick="document.getElementById('date_time_button').innerHTML = Date()">
-          Click and see Date and Time.
-        </button>
-
-        <p id="date_time_button"></p>
-      </td>
-    </table>
+     
        <% if @users.blank? %>
       <h4>Result can not found <%= params[:search] %>.</h4>
     <% end %>
+    <table border="2px" align="center" width="20%" class="table">
+      <td>
     <ul>
-      <% @users.each do |user| %>
-        <li>
-          <%= user.email %> |
+      <% @users.where.not(id: current_user.id).each do |user| %>
+        <li><hr>
+          <%= user.email %> <p align="center">
           <% if Frind.where(user_id: [current_user.id, user.id],friend_id: [current_user.id, user.id], accepted: false).present? %>
             Request Sent
           <% elsif Frind.where(user_id: [current_user.id, user.id],friend_id: [current_user.id, user.id], accepted: true).present? %>
             Friend
           <%else %>
-            <%= link_to "Add Friend", frinds_path(friend_id: user), method: :post %>
-          <% end %>
+            <%= link_to "Add Friend", frinds_path(friend_id: user), method: :post, class: "btn btn-primary" %>
+          <% end %></p>
         </li>
-      <% end %>
-    </ul>
-      # Here is a list of your pending requests
+        <% end %>
+      </ul>
+     </td>
+    </table>
+      <h3 align="center"> Here is a list of your pending requests</h3>
     <ul>
         
       <% current_user.received_frinds.each do |f_request| %>
         <li>
-          
+           <p align="center">
           <%= f_request.user.email %>
-          <%= link_to "Accept", frind_path(id: f_request.id), method: "put", onclick: "this.innerHTML='Done!'" %>
-          <%= link_to "Decline", frind_path(id: f_request.id), method: :delete %>
+          <%= link_to "Accept", frind_path(id: f_request.id), method: "put", class: "btn btn-primary" %>
+          <%= link_to "Decline", frind_path(id: f_request.id), method: :delete, class: "btn btn-primary" %></p>
         </li>
       <% end %>
     </ul>
     
-    <script>
-      function changeText(id) {
-          id.innerHTML = "Done!";
-      }
-    </script>
+    
   </body>
 </html>
