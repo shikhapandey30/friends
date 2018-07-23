@@ -51,9 +51,7 @@ class FrindsController < ApplicationController
     end
 
   end
-   
   
-
 	def frind_params
 	      params.require(:frinds).permit(:friend_id, :user_id, :accepted)
 	end 
