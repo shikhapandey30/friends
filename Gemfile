@@ -64,3 +64,8 @@ gem 'devise'
 gem 'carrierwave', '~> 1.0'
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'jquery-rails'
+gem 'omniauth-facebook'
+gem 'omniauth-linkedin'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-twitter'
+gem "rolify"

@@ -24,8 +24,7 @@ class FrindsController < ApplicationController
 	end
 
 	def update
-
-		@frind = Frind.find_by(id: params[:id])
+ 		@frind = Frind.find_by(id: params[:id])
 		@frind.update(accepted: true)
     if @frind.save
 	    redirect_to root_url, notice: "Successfully confirmed friend!"
@@ -42,17 +41,28 @@ class FrindsController < ApplicationController
 	end
 
   def whatever
-  	
-    @users= User.all
+  	@users= User.all
     if params[:search]
       @users = User.search(params[:search]).order("created_at DESC")
     else
       @users = User.all.order("created_at DESC")
     end
-
   end
-  
-	def frind_params
-	      params.require(:frinds).permit(:friend_id, :user_id, :accepted)
+   
+  def myfriend
+  	
+  	user = current_user
+   	#@users = user.frinds.where(accepted: true)
+   	
+   	# friends_ids = user.frinds.where(accepted: true).pluck(:friend_id)
+   	# received_friends_ids = user.received_frinds.where(accepted: true).pluck(:friend_id)
+
+   	# friends_ids = friends_ids + received_friends_ids
+   	# @friends = User.where(:id => friends_ids)
+   	@friends = user.friends
+	end
+
+  def frind_params
+	  params.require(:frinds).permit(:friend_id, :user_id, :accepted)
 	end 
 end

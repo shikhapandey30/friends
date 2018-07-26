@@ -7,11 +7,15 @@ Rails.application.routes.draw do
   resources :friends
   devise_for :users
   get 'welcome/index'
-  root 'frinds#whatever'
+  root 'frinds#welcome'
+  get "frinds/myfriend"
   
 
   #root 'frinds#whatever'
 
   resources :frinds, only: [:create, :update, :destroy]
   get 'frinds/whatever'
+   #get 'auth/:provider/callback', to: 'sessions#create'
+   match '/auth/:provider/callback', :to => 'sessions#create', via: [:get, :post]
+   match '/auth/failure', :to => 'sessions#failure', via: [:get, :post]
 end
