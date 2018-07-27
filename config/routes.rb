@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'welcome/index'
   root 'frinds#welcome'
   get "frinds/myfriend"
+  resources :users
   
 
   #root 'frinds#whatever'

@@ -16,6 +16,10 @@
                     Friend
                 <%else %>
                 <%= link_to "Add Friend", frinds_path(friend_id: user), method: :post, class: "btn btn-primary" %>
+                <%if current_user && current_user.try(:admin?) %>
+                <%= link_to "Decline", user_path(id: user.id), method: :delete, class: "btn btn-primary" %>
+                  <% end %>
+                </p>
               <% end %></p>
             </li>
           <% end %>
