@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   root 'frinds#welcome'
   get "frinds/myfriend"
   resources :users
+  get 'layouts/application'
   
 
   #root 'frinds#whatever'

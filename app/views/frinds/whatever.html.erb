@@ -1,5 +1,8 @@
 <html>
   <body>
+    
+      
+
     <% if @users.blank? %>
       <h4>Result can not found <%= params[:search] %>.</h4>
     <% end %>
@@ -19,6 +22,9 @@
                 <%if current_user && current_user.try(:admin?) %>
                 <%= link_to "Decline", user_path(id: user.id), method: :delete, class: "btn btn-primary" %>
                   <% end %>
+                  <%if current_user && current_user.try(:moderator?) %>
+                <%= link_to "Edit", edit_user_registration_path(id: user.id), class: "btn btn-primary" %>
+                <% end %>
                 </p>
               <% end %></p>
             </li>
@@ -38,5 +44,6 @@
         </li>
       <% end %>
     </ul>
+
   </body>
 </html>
