@@ -1,0 +1,22 @@
+<br>
+<table align="center">
+  <td>
+    <marquee behavior="alternate" BGCOLOR= #FF69B4><h3 align="center">My Friends</h3></marquee>
+  </td>
+</table><br>
+<table border="2px" align="center" width="50%">
+  <td>
+    <ul>
+      <% if current_user.present? %>
+        <li><hr>
+        	<%# user1 = User.find(user.try(:friend_id))%>
+
+          <%= current_user.email %>
+          <%= current_user.firstname %>
+          <%= image_tag current_user.image_url.to_s, style:"height: 70px; width:70px;" %>       </li>
+
+      <% end %>
+    </ul>
+    <%= link_to "edit profile", edit_user_registration_path(@user), class: "btn btn-primary"%>
+  </td>
+</table>

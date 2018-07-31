@@ -6,6 +6,17 @@
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
   </div>
+  <div class="field">
+
+    <%= f.label :firstname %><br />
+
+    <%= f.text_field :firstname %>
+
+  </div>
+  <div class="field">
+    <%= f.label :image %><br />
+    <%= f.file_field :image %>
+  </div>
 
   <div class="field">
     <%= f.label :password %>

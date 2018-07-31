@@ -48,6 +48,8 @@ class FrindsController < ApplicationController
       @users = User.all.order("created_at DESC")
     end
   end
+  def myprofile
+  end	
    
   def myfriend
   	

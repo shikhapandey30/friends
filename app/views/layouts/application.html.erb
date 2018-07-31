@@ -76,6 +76,7 @@
         <div id="user_nav">
           <% if user_signed_in? %>
             Signed in as <%= current_user.email %>. Not you?
+            <%= link_to "My Profile", frinds_myprofile_path, class: "btn btn-primary" %>
             <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: "btn btn-primary" %>
           <% else %>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

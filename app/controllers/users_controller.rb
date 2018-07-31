@@ -11,20 +11,37 @@ class UsersController < ApplicationController
 
 	def show
 	end
+		
 
-  def edit
-  	@user = User.find_by(id: params[:id])
-  	#redirect_to "/layouts/application"
+	 def edit
+
+    @user = User.find_by(id: params[:id])
+    #if current_user.id = @user.id
+      render 'users/edit'
+    #else
+      #redirect_to @user
+    
   end
 
 	def update
- 		@user = User.find_by(id: params[:id])
-		@user.update(accepted: true)
-    if @user.update(user_params)
-	    redirect_to root_url, notice: "Successfully confirmed friend!"
-	  else
-	    render 'frinds/whatever'
-	  end
+    
+ 		@users = User.find_by(id: params[:id])
+ 		@users.update(email: params[:user][:email])
+ 		
+ 		redirect_to root_url, notice: "Successfully confirmed friend!"
+	  # if @users.save
+   #  redirect_to root_url, notice: "Successfully confirmed friend!"
+	  # else
+	  #   render 'frinds/whatever'
+	  # end
 	end
-	
+	 #  def update
+  #   @users = user.update!
+  #   @user = User.find_by(params[:id])
+  #   if @user.update_attributes(params[:user])
+  #     redirect_to users_path, :notice => "User updated."
+  #   else
+  #     redirect_to users_path, :alert => "Unable to update user."
+  #   end
+  # end
 end

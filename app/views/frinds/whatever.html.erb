@@ -12,7 +12,14 @@
         <ul>
           <% @users.where.not(id: current_user.id).each do |user| %>
             <li><hr>
-              <%= user.email %> <p align="center">
+              
+              <%= user.firstname %>&nbsp;&nbsp;&nbsp;&nbsp;
+              <%= user.email %>
+              <% if user.image.present? %>
+                <%= image_tag user.image_url.to_s, style:"height: 70px; width:70px;" %>
+              <% end %>
+               <p align="center">
+
               <% if Frind.where(user_id: [current_user.id, user.id],friend_id: [current_user.id, user.id], accepted: false).present? %>
                 Request Sent
                 <% elsif Frind.where(user_id: [current_user.id, user.id],friend_id: [current_user.id, user.id], accepted: true).present? %>
@@ -23,7 +30,7 @@
                 <%= link_to "Decline", user_path(id: user.id), method: :delete, class: "btn btn-primary" %>
                   <% end %>
                   <%if current_user && current_user.try(:moderator?) %>
-                <%= link_to "Edit", edit_user_registration_path(id: user.id), class: "btn btn-primary" %>
+                <%= link_to "Edit", edit_user_path(id: user.id), class: "btn btn-primary" %>
                 <% end %>
                 </p>
               <% end %></p>
@@ -38,8 +45,10 @@
       <% current_user.received_frinds.each do |f_request| %>
         <li>
           <p align="center">
-          <%= f_request.user.email %>
+            
+          <%= f_request.user.try(:email) %>
           <%= link_to "Accept", frind_path(id: f_request.id), method: "put", class: "btn btn-primary" %>
+           
           <%= link_to "Decline", frind_path(id: f_request.id), method: :delete, class: "btn btn-primary" %></p>
         </li>
       <% end %>
