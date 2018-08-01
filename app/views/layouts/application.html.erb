@@ -46,37 +46,42 @@
         stopAutoOnClick: true,
         pager: true,
 
-        slideWidth: 1000,
+        slideWidth: 2000,
          });
        },2000);
-    </script><table border="2px" width="50%" align="center"><td bgcolor="skyblue">
+    </script><table border="2px" align="center"><td bgcolor="skyblue">
      <div class="bxslider" align="center">
-      <div align="center"><%= image_tag asset_path("logos/0.jpg")%></div>
-      <div align="center"><%= image_tag asset_path("logos/56.jpg")%></div>
-      <div align="center"><%= image_tag asset_path ("logos/56.jpg")%></div>
+      <div align="center"><%= image_tag asset_path("logos/90.jpg"), style:"height: 300px; width:100%;"%></div>
+      <div align="center"><%= image_tag asset_path("logos/56.jpg"), style:"height: 300px; width:100%;"%></div>
+      <div align="center"><%= image_tag asset_path("logos/0.jpg"), style:"height: 300px; width:100%;"%></div>
     </div></td>
-  </table>
+  </table><br>
+  <table align="center" border="0px" width="30%">
+    <td>
      <%= form_tag(frinds_whatever_path, :method => "get", id: "search-form") do %>
-         <%= text_field_tag :search, params[:search], placeholder: "Search friends", class: "form-control" %> 
-         <br>
-         <p align="center">
+         <%= text_field_tag :search, params[:search], placeholder: "Search friends"%> 
+         
+         
           <%= submit_tag "Search", :email => nil, class: "btn btn-primary" %>
+         
         <button type="button"
           onclick="document.getElementById('date_time_button').innerHTML = Date()">
           Click and see Date and Time.
-        </button>
+        </button><br>
 
         <p id="date_time_button"></p>
-           </p>
+           
            <hr >
-           <br>
+           
       <% end %>
-  <table border="0px" align="center" width="20%" >
+    </td>
+  </table>    
+  <table border="0px" align="center" width="30%">
     <td>
         <div id="user_nav">
           <% if user_signed_in? %>
-            Signed in as <%= current_user.email %>. Not you?
-            <%= link_to "My Profile", frinds_myprofile_path, class: "btn btn-primary" %>
+            Signed in as <%= current_user.email %>. Not you?&nbsp;&nbsp;&nbsp;
+            <%= link_to "My Profile", frinds_myprofile_path, class: "btn btn-primary" %>&nbsp;&nbsp;&nbsp;
             <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: "btn btn-primary" %>
           <% else %>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

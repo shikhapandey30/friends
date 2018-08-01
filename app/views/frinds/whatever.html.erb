@@ -1,8 +1,5 @@
 <html>
   <body>
-    
-      
-
     <% if @users.blank? %>
       <h4>Result can not found <%= params[:search] %>.</h4>
     <% end %>
@@ -18,12 +15,12 @@
               <% if user.image.present? %>
                 <%= image_tag user.image_url.to_s, style:"height: 70px; width:70px;" %>
               <% end %>
-               <p align="center">
+              <p align="center">
 
               <% if Frind.where(user_id: [current_user.id, user.id],friend_id: [current_user.id, user.id], accepted: false).present? %>
                 Request Sent
                 <% elsif Frind.where(user_id: [current_user.id, user.id],friend_id: [current_user.id, user.id], accepted: true).present? %>
-                    Friend
+                Friend
                 <%else %>
                 <%= link_to "Add Friend", frinds_path(friend_id: user), method: :post, class: "btn btn-primary" %>
                 <%if current_user && current_user.try(:admin?) %>
@@ -39,20 +36,23 @@
         </ul>
       </td>
     </table>
-      
-    <h3 align="center"> Here is a list of your pending requests</h3>
-    <ul>
-      <% current_user.received_frinds.each do |f_request| %>
-        <li>
-          <p align="center">
-            
-          <%= f_request.user.try(:email) %>
-          <%= link_to "Accept", frind_path(id: f_request.id), method: "put", class: "btn btn-primary" %>
-           
-          <%= link_to "Decline", frind_path(id: f_request.id), method: :delete, class: "btn btn-primary" %></p>
-        </li>
-      <% end %>
-    </ul>
-
+    <table border="2px" align="center" width="30%">
+      <td>  
+        <h3 align="center"> Here is a list of your pending requests</h3>
+        <ul>
+          <% current_user.pending_friends.each do |f_request| %>
+            <li>
+              <p align="center">
+                
+              <%= f_request.user.try(:email) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <%= link_to "Accept", frind_path(id: f_request.id), method: "put", class: "btn btn-primary" %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               
+              <%= link_to "Decline", frind_path(id: f_request.id), method: :delete, class: "btn btn-primary" %></p>
+            </li>
+          <% end %>
+        </ul>
+      </td>
+    </table><h1 align="center">
+    <%= link_to "Back", :back, class: "btn btn-primary" %></h1>
   </body>
 </html>
