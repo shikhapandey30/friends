@@ -5,19 +5,25 @@
   </td>
 </table><br>
 <table border="2px" align="center" width="50%">
-  <ul>
-    <% @friends.each do |user| %>
-      <li><hr>
-        	<%# user1 = User.find(user.try(:friend_id))%>
-        <%= user.email %> 
-      </li>
-     <% end %>  
+  <tr>
+    <td>
       <% current_user.friends.each do |friend| %>
-        <%= link_to "Unfriend", frind_path(id: friend.id), method: :delete, class: "btn btn-primary" %>
+        <% if friend.user == current_user %>
+          <% user = friend.frind %>
+        <% else %>
+          <% user = friend.user %>
+        <% end %>
+        <% if user.present? %>
+          <li>
+            <hr>
+            <%= user.email %> 
+          </li>
+          <%= link_to "Unfriend", frind_path(id: friend.id), method: :delete, class: "btn btn-primary" %>
+        <% end %>
       <% end %>
-   
-  </ul>
+    </td>
+  <tr>
 </table>
 <h1 align="center">
-  <%= link_to "Back", :back, class: "btn btn-primary" %>
+ <%= link_to "Back", :back, class: "btn btn-primary" %>
 </h1>

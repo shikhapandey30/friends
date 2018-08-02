@@ -22,11 +22,18 @@ class User < ApplicationRecord
     
 
 	def friends
-	  friends_ids = self.frinds.where(accepted: true).pluck(:friend_id)
-    received_friends_ids = self.received_frinds.where(accepted: true).pluck(:friend_id, :user_id)
 
-    friends_ids = friends_ids + received_friends_ids
-    User.where(:id => friends_ids)
+    Frind.where("accepted = ? AND (user_id = ? OR friend_id = ?)", true, self.id, self.id)
+
+    # Frind.where("accepted = ?", true)
+
+
+	  # friends_ids = self.frinds.where(accepted: true).pluck(:friend_id)
+   #  received_friends_ids = self.received_frinds.where(accepted: true).pluck(:friend_id)
+   # # received_friends_ids = self.received_frinds.where(accepted: true).pluck(:user_id)
+
+   #  friends_ids = friends_ids + received_friends_ids
+   #  User.where(:id => friends_ids)
 	end
 
 # to call your pending sent or received
