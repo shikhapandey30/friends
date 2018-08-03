@@ -63,6 +63,10 @@ class FrindsController < ApplicationController
    	# @friends = User.where(:id => friends_ids)
    	@friends = user.friends
 	end
+	def pending
+		@users = current_user
+		@users = current_user.pending_friends
+	end
 
   def frind_params
 	  params.require(:frinds).permit(:friend_id, :user_id, :accepted)
