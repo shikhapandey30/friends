@@ -1,0 +1,30 @@
+<nav class="navbar navbar-inverse navbar-expand-lg rounded">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <div class="container-fluid container_cm">
+        <div class="navbar-header">
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <% unless current_user %>
+            <li><a href="/users/sign_up"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="/users/sign_in"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <% else %>
+           
+          <li><a href="/frinds/whatever">All Users</a></li>
+          <li><a href="/frinds/myfriend">Friends</a></li>
+          <li><a href="/frinds/myfriend">Pending Request</a></li>
+            <li class = "dropdown">
+              <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">
+                
+              <%= current_user.firstname %>
+
+                <b class = "caret"></b>
+              </a>
+              <ul class = "dropdown-menu">             
+                 <li><%= link_to "My Profile", frinds_myprofile_path, class: "btn btn-primary" %></li>
+                 <li><%= link_to('Logout', destroy_user_session_path, method: :delete) %></li>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>

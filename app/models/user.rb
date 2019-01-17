@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
   
   has_many :authentications
+  has_many :posts
 
   has_many :frinds
 	has_many :received_frinds, class_name: "Frind", foreign_key: "friend_id"

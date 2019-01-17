@@ -3,21 +3,31 @@
     <% if @users.blank? %>
       <h4>Result can not found <%= params[:search] %>.</h4>
     <% end %>
-    
-    <table border="2px" align="center" width="20%" class="table">
-      <td>
-        <ul>
-          <% @users.where.not(id: current_user.id).each do |user| %>
-            <li><hr>
-              
-              <%= user.firstname %>&nbsp;&nbsp;&nbsp;&nbsp;
-              <%= user.email %>
-              <% if user.image.present? %>
-                <%= image_tag user.image_url.to_s, style:"height: 70px; width:70px;" %>
-              <% end %>
-              <p align="center">
+  </body>
+</html>
 
-              <% if Frind.where(user_id: [current_user.id, user.id],friend_id: [current_user.id, user.id], accepted: false).present? %>
+<div class="table-responsive">          
+  <table class="table datatable table-bordered">
+    <thead>
+      <tr class="bg-primary">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Image</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+     <% @users.where.not(id: current_user.id).each do |user| %>
+        <tr>
+          
+        <td><%= user.firstname %></td>
+        <td><%= user.email %></td>
+        <td><% if user.image.present? %>
+                <%= image_tag user.image_url.to_s, style:"height: 70px; width:70px;" %>
+            <%end%>    
+                  
+        </td>
+        <td><% if Frind.where(user_id: [current_user.id, user.id],friend_id: [current_user.id, user.id], accepted: false).present? %>
                 Request Sent
                 <% elsif Frind.where(user_id: [current_user.id, user.id],friend_id: [current_user.id, user.id], accepted: true).present? %>
                 Friend
@@ -30,15 +40,19 @@
                 <%= link_to "Edit", edit_user_path(id: user.id), class: "btn btn-primary" %>
                 <% end %>
                 </p>
-              <% end %></p>
-            </li>
-          <% end %>
-        </ul>
-      </td>
-    </table>
-    <table border="2px" align="center" width="30%">
+              </td>
+         
+         <%end%> 
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<h1 align="center">
+    <%= link_to "Back", :back, class: "btn btn-primary" %></h1>
+<table border="2px" align="center" width="30%">
       <td>  
-        <h3 align="center"> Here is a list of your pending requests</h3>
+        <h3 align="center">Your Pending Requests</h3>
         <ul>
           <% current_user.pending_friends.each do |f_request| %>
             <li>
@@ -52,7 +66,4 @@
           <% end %>
         </ul>
       </td>
-    </table><h1 align="center">
-    <%= link_to "Back", :back, class: "btn btn-primary" %></h1>
-  </body>
-</html>
+    </table>

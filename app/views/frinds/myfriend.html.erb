@@ -1,29 +1,28 @@
-<br>
-<table align="center">
-  <td>
-    <marquee behavior="alternate" BGCOLOR= #FF69B4><h3 align="center">My Friends</h3></marquee>
-  </td>
-</table><br>
-<table border="2px" align="center" width="50%">
-  <tr>
-    <td>
+<div class="table-responsive">          
+  <table class="table datatable table-bordered">
+    <thead>
+      <tr class="bg-primary">
+        <th>Friends</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
       <% current_user.friends.each do |friend| %>
-        <% if friend.user == current_user %>
+        <tr>
+          
+        <td><% if friend.user == current_user %>
           <% user = friend.frind %>
         <% else %>
           <% user = friend.user %>
         <% end %>
         <% if user.present? %>
-          <li>
-            <hr>
-            <%= user.email %> 
-          </li>
-          <%= link_to "Unfriend", frind_path(id: friend.id), method: :delete, class: "btn btn-primary" %>
-        <% end %>
+          <hr>
+        <%= user.email %></td>
+        <td><%= link_to "Unfriend", frind_path(id: friend.id), method: :delete, class: "btn btn-primary" %></td>
+         
+         <%end%> 
+        </tr>
       <% end %>
-    </td>
-  <tr>
-</table>
-<h1 align="center">
- <%= link_to "Back", :back, class: "btn btn-primary" %>
-</h1>
+    </tbody>
+  </table>
+</div>

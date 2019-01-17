@@ -1,55 +1,78 @@
-<br>
-<table border="2" align="center" width="50%" background="/images/logos/0.jpg" >
-  <tr>
-    <td>
-      <h2 align="center">Log in</h2>
-
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="field" width="100%" align="center">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <style type="text/css">
+        .login-form {
+          width: 370px;
+            margin: 50px auto;
+            
+        }
+          .login-form form {
+            margin-bottom: 15px;
+              background: #5f4d4d45;
+              box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+              padding: 30px;
+          }
+          .login-form h2 {
+              margin: 0 0 15px;
+          }
+          .form-control, .btn {
+              min-height: 38px;
+              border-radius: 2px;
+          }
+          .btn {        
+              font-size: 15px;
+              font-weight: bold;
+          }
+      </style>
+  </head> 
+  <body>  
+    
+    <div class='container-fluid login bg-dark-grey login-form' >
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {name: 'user_sign_in'}) do |f| %>
+        <div class="form-group text-center">
+          <h3 class="mb40">Log In</h3>
+        </div> 
+        <div class="login-white-box">
+          <%= devise_error_messages! %>
+          <% flash.each do |key, value| %>
+            <% if(value != "Signed out successfully.") %>
+              <div class="flash alert alert-warning <%= key %>"><%= value %></div>
+            <% end%>
+          <% end %>
+          
+          <div class="form-group">
           <%= f.label :email%>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control input-form-control',placeholder: 'email' %>
         </div><br>
-
-        <div class="field" align="center">
-          <%= f.label :password %>
-          <%= f.password_field :password, autocomplete: "off" %>
-        </div>
-         
-        <% if devise_mapping.rememberable? -%>
-          <div class="field" align="center">
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
+          <div class="form-group">
+                                
+            <%= f.label :password %><br />
+            <%= f.password_field :password, autocomplete: "current-password", class: 'form-control input-form-control',placeholder: 'Password'  %>
           </div>
-        <% end -%>
 
-        <div class="actions" align="center">
-          <%= f.submit "Log in", class: "custom-control-input" %>
+          <% if devise_mapping.rememberable? %>
+            <div class="form-group">
+              <%= f.check_box :remember_me %>
+              <%= f.label :remember_me %>
+            </div>
+          <% end %>
+          
+          <div class="form-group row">
+            <div class="col-md-12">
+              <div class="pull-left">
+                 <input type="hidden" name="existing_session_data" value="<%= session[:book].present? ? session[:book] : '' %>">
+                <%= f.submit "Login",class: "btn btn-info btn-md" %>
+              </div>
+            </div>
+          </div>
         </div>
       <% end %>
-    </td>
-  </tr>
-</table><br>
-
-<%= render "devise/shared/links" %><br><br><hr>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<h3 align="center">OR LOGIN WITH.........</h3><br><hr>
-<table border="0px" align="center" width="100%">
-  <td>
-    
-    <th>
-      <%= link_to "Login with facebook", "/auth/facebook", class: "btn btn-primary"%>
-    </th>
-
-    <th>
-      <%= link_to "Login with linkedin", "/auth/linkedin", class: "btn btn-primary"%>
-    </th>
-
-    <th>
-      <%= link_to "Login with Google", "/auth/google_oauth2", class: "btn btn-primary"%>
-    </th>
-
-    <th>
-      <%= link_to "Login with Twitter", "/auth/twitter", class: "btn btn-primary"%>
-    </th>
-  </td>
-</table>
+      <%= link_to "facebook", "/auth/facebook", class: "btn btn-primary"%>
+      <%= link_to "Linked", "/auth/linkedin", class: "btn btn-primary"%>
+      <%= link_to "Google", "/auth/google_oauth2", class: "btn btn-primary"%>
+      <%= link_to "Twitter", "/auth/twitter", class: "btn btn-primary"%>
+    </div>
+  </body>
+</html>
