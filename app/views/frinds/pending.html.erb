@@ -1,9 +1,20 @@
-<% current_user.pending_friends.each do |f_request| %>
-  <li>
-    <p align="center">
-              
-      <%= f_request.user.try(:email) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <%= link_to "Accept", frind_path(id: f_request.id), method: "put", class: "btn btn-primary" %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <%= link_to "Decline", frind_path(id: f_request.id), method: :delete, class: "btn btn-primary" %></p>
-  </li>
-<% end %>
+<div class="table-responsive">          
+  <table class="table datatable table-bordered">
+    <thead>
+      <tr class="bg-primary">
+        <th>Email</th>
+        <th>Action</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+     <% current_user.pending_friends.each do |f_request| %>
+        <tr>
+	        <td><%= f_request.user.try(:email) %></td>
+	        <td><%= link_to "Accept", frind_path(id: f_request.id), method: "put", class: "btn btn-primary" %></td>
+	        <td><%= link_to "Decline", frind_path(id: f_request.id), method: :delete, class: "btn btn-primary" %></p></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

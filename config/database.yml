@@ -26,8 +26,17 @@
 development:
   adapter: postgresql
   encoding: unicode
+
   database: community_development
   host: localhost
   pool: 5
   username: root
   password: root
+production:  
+
+  database: comunity_development
+  host: localhost
+  pool: 5
+  username: postgres
+  password: postgres
+

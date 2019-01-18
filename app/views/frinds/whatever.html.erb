@@ -50,20 +50,20 @@
 </div>
 <h1 align="center">
     <%= link_to "Back", :back, class: "btn btn-primary" %></h1>
-<table border="2px" align="center" width="30%">
+<!-- <table border="2px" align="center" width="30%">
       <td>  
         <h3 align="center">Your Pending Requests</h3>
         <ul>
-          <% current_user.pending_friends.each do |f_request| %>
+          <%# current_user.pending_friends.each do |f_request| %>
             <li>
               <p align="center">
                 
-              <%= f_request.user.try(:email) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <%= link_to "Accept", frind_path(id: f_request.id), method: "put", class: "btn btn-primary" %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <%#= f_request.user.try(:email) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <%#= link_to "Accept", frind_path(id: f_request.id), method: "put", class: "btn btn-primary" %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                
-              <%= link_to "Decline", frind_path(id: f_request.id), method: :delete, class: "btn btn-primary" %></p>
+              <%#= link_to "Decline", frind_path(id: f_request.id), method: :delete, class: "btn btn-primary" %></p>
             </li>
-          <% end %>
+          <%# end %>
         </ul>
-      </td>
-    </table>
+  </td>
+</table> -->

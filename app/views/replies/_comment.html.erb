@@ -1,0 +1,10 @@
+<p>
+  <strong>title:</strong>
+  <%= comment.title %>
+</p>
+	 
+<p>
+  <strong>Comment:</strong>
+  <%= comment.body %>
+</p>
+<%= link_to "Reply", new_post_comment_reply_path(comment.post, comment) %>

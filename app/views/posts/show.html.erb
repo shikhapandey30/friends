@@ -1,95 +1,63 @@
-<%= content_for(:title, @post.try(:topic).try(:capitalize)) %>
-<div class="mainCOntnt">
-  <%=render "layouts/left_panel"%>
-  <!-- Showing Post -->
-  <div class="rightContent">
-    <div class="overLAy"></div>
-    <div class="postCover posRel <%=@post.try(:upload).try(:image).present? ? '' : 'noImagePost'%>" style="background-image: url('<%=@post.try(:upload).try(:image).url(:banner) rescue nil%>')">
-      <div class="postCoverBkg ">
-        <div class="clearfix innerWIdth550 posRel">
-          <div class="pTitltOuter">
-            <div class="postTitle">
-              <%= @post.title %>
-            </div>
-            <a href="/dashboard" class="backBtn">Back</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="clearfix innerWIdth550 tac ">
-      <div class="clearfix whiteBox borderTop mt0 mb10 pb0">
-        <div class="clearfix formOuterPost tal padding10-0">
-          <div class="col-sm-12 mb10">
-            <div class="clearfix userInfo posRel">
-              <a href="#" class="userImg"><img src="<%= @post.user.try(:img) %>" alt=""></a>
-              <a href="#" class="userNAme"><%= @post.user.try(:screen_name) %></a>
-              <br>
-              <span class="font13"><%#= @designation %></span>
-              <div class="fr grayColor tar"><%= time_ago_in_words(@post.updated_at).capitalize %> ago<br>
-               <%if !current_user.friendships.collect(&:friend).include? @post.user %>
-                  <span class="friendship-button-<%=  @post.try(:user).try(:id)  %>">
-                  <%= link_to (image_tag 'images/add.png'), friendships_path(:friend_id =>@post.try(:user).try(:id)), :class=>"mt10 fr grayColor tar ", :remote=>true ,:method => :post %>
-                  </span>
-                <%end%>
-              <%if current_user != @post.user %>
-                <!-- render follow link -->
-                <span id="following-button-span-<%= @post.id %>" class="user-folowed-<%=@post.try(:user).try(:id) %>">
-                  <%= render :partial=> "users/follow_link", :locals => {:object => @post} %>
-                </span>
-                <!-- render follow link -->
-              <% end %>
-              </div>
-            </div>
-            <div class="uniOuter">
-              <div class="mt20 blackColor ">
-                <p><%= @post.try(:description).try(:html_safe) %></p>
-                <a href="<%=root_path(id: @post.id)%>" class="listen whiteBtn" data-remote="true"><img src="<%= asset_path("images/audio38.png") %>" alt=""> Listen this post </a>
-              </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
-          <!-- render comments -->
-          <%= render 'layouts/shared/comments' , object: @post %>
-          <!-- render comments -->          
-        </div>
-      </div>
-    </div>
+<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="col-sm-12 well">
+    <h1><%= @post.topic %></h1>
+    <h2><%= @post.post_text %></h2>
+    <h5><%= @post.attachment %></h5>
+    
   </div>
-  <!-- Showing Post -->
 </div>
 
-<!-- script for comments functionality-->
-<script type="text/javascript">
-  $(function () {
-    $('.date').datetimepicker( {format: 'YYYY-MM-DD'});
-  });
-  $("#comment_cancel").click(function(event) {
-    $("#comment_body").val("");
-  });
-  $("#comments").hide();
-  $("#comment_box").hide();
-  $("#comment_button").click(function(event) {
-    event.preventDefault();
-    $("#comments").toggle();
-    $("#comment_box").toggle();
-    $("html, body").scrollTop($('#comment_box').offset().top);
-  });
-  function reply_toggle(comment_id){
-    // For Toggle
+<!-- <p>
+  <strong>User:</strong>
+  <%#= @post.user_id %>
+</p> -->
+
+<!-- <p>
+  <strong>Topic:</strong>
+  <%#= @post.topic %>
+</p>
+
+<p>
+  <strong>Post text:</strong>
+  <%#= @post.post_text %>
+</p>
+
+<p>
+  <strong>Attachment:</strong>
+  <%#= @post.attachment %>
+</p>
+
+<p>
+  <strong>Visibility:</strong>
+  <%#= @post.visibility %>
+</p>
+
+<p>
+  <strong>Expiration date:</strong>
+  <%#= @post.expiration_date %>
+</p> -->
+
+<h2>Comments</h2>
+<%= render @post.comments %>
+ 
+<!-- <h2>Add a comment:</h2> -->
+<%= render 'comments/form' %>
+<% if @post.user_id == current_user.id %>
+  <%= link_to 'Edit', edit_post_path(@post) %> |
+<%end%>  
+<%= link_to 'Back', posts_path %>
+
+<style type="text/css">
+  .well {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 2px solid #e3e3e3;
+    border-radius: 4px;
   }
-  $("#save_comment").click(function(event) {
-    event.preventDefault();
-    if ($("#comment_body").val() == ""){
-      event.preventDefault();
-    }
-    else {
-      $.ajax({
-        type: "post",
-        dataType: "script",
-        url: "/comments",
-        data: {"comment[body]": $("#comment_body").val(), post_id: $("#post_id").val() }
-      });
-    }
-  });
-</script>
-<!-- script for comments functionality -->
+  .container {
+    max-width: 985px;
+  }
+</style>

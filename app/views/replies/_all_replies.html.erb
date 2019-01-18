@@ -1,0 +1,9 @@
+<h3>Reply</h3>
+<% @replies= Reply.where(:comment_id=> comment) %>
+<% @replies.each do |reply| %>
+	<p>
+		<strong>Reply</strong>
+		<%=reply.body%>
+	</p>
+
+<%end%>
