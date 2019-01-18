@@ -1,0 +1,33 @@
+<!-- <p>
+  <strong>Commenter:</strong>
+  <%#= comment.title %>
+</p>
+  -->
+<p>
+  <strong>Comment:</strong>
+  <%= comment.body %>
+</p>
+ <% if @post.user_id == current_user.id %>
+  <%= link_to 'Destroy Comment', [comment.post, comment],
+               method: :delete,
+               data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
+<%end %>               
+<%= link_to "Edit comment", edit_post_comment_path(comment.post, comment), class: "btn btn-primary" %>
+<h3>Reply</h3>
+    <% @replies= Reply.where(:comment_id=> comment) %>
+    <% @replies.each do |reply| %>
+    <p>
+      <br>
+      <strong>Reply</strong>
+      <%=reply.body%>
+    </p>
+     
+    <%end%>
+     
+    <div id="reply-container"></div>
+  </td>
+</table>
+
+<%= render :partial => 'replies/form', locals: {post: @post, comment: comment, reply: comment.replies.new} %>
+<%= render partial: "likes/like", locals: {comment: comment } %><hr>
+                

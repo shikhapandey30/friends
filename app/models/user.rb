@@ -38,7 +38,22 @@ class User < ApplicationRecord
 	end
 
 # to call your pending sent or received
+  def is_liked(comment)
+   if Like.where(:likeable => comment ,:user_id => self.id).present?
+   Like.where(:likeable => comment ,:user_id => self.id).last.like==true
+   end
+ end
 
+ def is_disliked(comment)
+   if Like.where(:likeable => comment ,:user_id => self.id).present?
+   Like.where(:likeable => comment ,:user_id => self.id).last.like==false
+   end
+ end
+ def self.find_comment(id, type)
+   comment= type.constantize.find(id)
+   return comment
+ end 
+ 
 	def pending
 		pending_friends | requested_frinds
   end

@@ -1,71 +1,82 @@
-<%= content_for(:title, 'Posts') %>
-<div class="midCon textureBg">
-  <div class="responsive">
-    <div class="virtualCatCon clearfix">
-      <div class="subHd"><%= t('pages.index.all_posts')%></div>
-      <div class="shadeBox reviewTable listingtble">
-        <table cellpadding="0" cellspacing="0">
-          <tr class="hd">
-            <td width="10%"><%= t('pages.index.user')%></td>
-            <td width="10%"><%= t('pages.index.topic')%></td>
-          
-            <td width="10%"><%= t('pages.index.view_detail')%></td>
-            <td width="10%"><%= t('pages.index.Like/comment')%></td>
-             <td width="10%"><%= t('pages.index.edit')%></td>
-            <td width="20%"><%= t('pages.index.actions')%></td>
-          </tr>
-
-  <tbody>
-    <!-- Showing ALl Posts -->
+<h1 align="center"><%= link_to 'New Post', new_post_path, class: "btn btn-primary" %><br/><br /></h1>
+<section class="container">
+  <div  style="text-align: center;" class="row">
     <% @posts.each do |post| %>
-      <tr>
-        <td>Created by:<%= post.user.try(:screen_name) %></td>
-        <td><%= post.title %></td>
-        <td><%= link_to 'Show', post %></td>
-
-        <td>
-          <span class="hide-show-comment" onclick= "$('#commentBox-<%= post.id%>').toggle();">Comment</span>
-          <div class="lists-comments-<%= post.id%>">
-          <% post.comments.each do |comment|%>
-<!--           <div class="comments-box"><%#= comment.body %></div>
- -->        <div class="comment-box-<%=comment.id%>">
-            <!-- render comment --> 
-            <%= render 'comments/show' , :comment => comment %>
-            <!-- render comment --> 
-           </div>
-          <%end%>
-             <div class="commentBox commentBox-<%= post.id%>" style="display :none" id="commentBox-<%= post.id%>">
-       
-            <%= form_for([post, post.comments.build] , :remote=>true) do |f|%>
-
-           <%= f.text_field :body, :class=>"formInput" ,:style=>'width:100%'%>
-             <%=f.hidden_field :user_id,:value=>current_user.id%>
-             <%#= f.submit "Comment", :class=>"btn"%>
-        <%end%>
-        </div>
-         
-            <%= link_to "Like", post_likes_path(post), method: :post, remote: true%></td>
-             
-
-        <%if post.user_id==current_user.id%>
-          <td><%= link_to 'Edit', edit_post_path(post) %>
-          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-         <%end%>
-      </tr>
+      <div class="col-md-4">
+        <a href="/posts/<%= post.id %>">
+          <div class="card mb-4 box-shadow card_size">
+            <div class="card-header text-center">
+              <h4><%= post.topic %></h4>
+            </div>
+            <div class="post_size " >
+              <p>
+                <h5><%= post.post_text %></h5>
+              </p>
+            </div>
+             <div class="post_size text-center card-header">
+              <p>
+                <h5><%= post.attachment %></h5>
+              </p>
+            </div>
+          </div>
+        </a>
+        <% if post.user_id == current_user.id %>
+      <%= link_to 'Edit', edit_post_path(post), class: "btn btn-primary" %>
+      <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
+      <%end%>
+      </div>
+      
     <% end %>
-    <!-- Showing ALl Posts -->
-  </tbody>
-</table>
-</div>
-</div>
   </div>
-</div>
-<br>
-<style>
-  #comment_body{
-    width: 100% !important;
+</section>
+<style type="text/css">
+  .card_size
+  {
+    width: 297px;
+    /*height: 150px;*/
   }
-  #comment{
-   width: 200px !important;
+  .h4
+  {
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 32px;
+  }
+  .row
+  {
+
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  .container {
+    max-width: 940px;
+    /*background-color: grey;*/
+  }
+  .card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0,0,0,0.03);
+    border-bottom: 1px solid rgba(0,0,0,0.125);
+  }
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,0.125);
+    border-radius: 0.25rem;
+  }
+  .mb-4, .my-4 {
+    margin-bottom: 1.5rem !important;
+  }
+  .post_size
+  {
+    height: 100px;
+
   }
 </style>

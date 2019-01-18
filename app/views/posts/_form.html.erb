@@ -1,105 +1,49 @@
-<%= content_for(:title, @post.new_record? ? 'New Post' : @post.try(:topic).try(:capitalize)) %>
-<div class="mainCOntnt">
-  <%=render "layouts/left_panel"%>
-  <div class="rightContent">
-    <%=render 'layouts/topNav'%>
-    <div class="clearfix innerWIdth550 tac ">
-      <!-- Post creation form -->
-      <%= nested_form_for(@post, html: {class: "", :id => "form-id"}) do |f| %>
-        <% if @post.errors.any? %>
-          <div id="error_explanation" class="login errorMSg">
-            <!-- <h2><%#= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2> -->
-            <ul>
-              <% @post.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-        <div class="whiteBox mt90">
-          <div class="userTHumb userTHumbRight">
-            <a href="<%= profile_path(current_user)%>" class="profileImg">
-            <%= image_tag current_user.try(:img) %>
-            </a>
-            <div class="nameLocation">
-              <a href="<%= profile_path(current_user)%>"><%= current_user.try(:screen_name) %></a><br>
-              <span class="location"><%= current_user.try(:profile).try(:country).try(:name) %></span>
-            </div>
-          </div>
-          <!-- render upload for image, file, url uploading -->
-          <%=render 'layouts/shared/upload', f: f, obj: @post %>
-          <!-- render upload for image, file, url uploading -->      
-        </div>
-        <div class="clearfix whiteBox">
-          <div class="clearfix formOuterPost tal">
-            <div class="col-sm-6 pr10">
+<%= form_with(model: post, local: true) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
 
-              <label>Category<span class="redColor">*</span></label>
-              <div class="selctFormBox">
-                <%= f.text_field "category", :value=>select_type(f, "category_id", "Category"), class: "selectInput" ,:id=>'category', name: "category_name_second"%>
-                <%= f.select(:category_id, Category.all.collect {|s| [s.name, s.id]}, {:include_blank => "Select"}, "data-validation-engine"=>"validate[required]", class: "select", "data-errormessage-value-missing"=>"Please select category") %>
-              </div>
-              <div id="category_name_error"></div>
-            </div>
-            <div class="col-sm-6 pl10">
-              <label>Topic<span class="redColor">*</span></label>
-              <!-- <div class="selctFormBox"> -->
-              <%#= f.hidden_field :topic_id, :value=>'Select', class: " selectInputField" %>
-              <%#= f.text_field "topic_id", :value=>'Select', class: "selectInput" ,:id=>'topic'%>
-              <%#= f.select("topic_id", Topic.all.collect {|s| [s.name, s.id]}, {}, class: "select")  %>
-              <!-- </div> -->
-              <%= f.text_field :topic, :id=>"topic", "data-validation-engine"=>"validate[required]", class: "inputTextW small", placeholder: "Topics", "data-errormessage-value-missing"=>"Topic should not be blank" %>
-            </div>
-            <div class="col-sm-12">
-              <label>Headline<span class="redColor">*</span></label>
-              <%= f.text_field :title, "data-validation-engine"=>"validate[required]", class: "inputTextW small", placeholder: "Please write headline here....", "data-errormessage-value-missing"=>"Headline should not be blank" %>
-            </div>
-            <div class="col-sm-12">
-              <label class=""><%= f.label "Description" %></label>
-              <%= f.text_area :description, class: "inputTextW small", placeholder: "Please write description here...." %>
-            </div>
-            <div class="col-sm-12">
-              <label class="font16">Select Visibility</label><br>
-              <div class="mt5">
-                <label class="radioV">  <%= f.radio_button :visibility, false %> Private  </label> &nbsp; &nbsp; <label class="radioV">  <%= f.radio_button :visibility, true, checked: true %> Public  </label>
-              </div>
-            </div>
-            <label  class="col-sm-12 mt20 block">Set expiration of post </label>
-            <div class="col-sm-6  pr10  dateOuter">
-              <label>From<span class="redColor">*</span></label> <%= f.text_field :start_date, "data-validation-engine"=>"validate[required]", class: "inputTextW small date start_date", "data-errormessage-value-missing"=>"Please select From date" %>
-          
-            </div>
-            <div class="col-sm-6  pl10 dateOuter">
-              <label>To<span class="redColor">*</span></label><%= f.text_field :expiration_date, placeholder: "DD-MM-YYYY", "data-validation-engine"=>"validate[required]", class: "inputTextW small date end_date", "data-errormessage-value-missing"=>"Please select To date" %>
-            </div>
-            <div class="col-sm-12">
-              <%= f.submit "Save Post", class: "blueBtn common_submit" %>
-              <a href="/dashboard" class="grayBtn">Cancel</a>  
-            </div>
-          </div>
-        </div>
-        <br>
+      <ul>
+      <% post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
       <% end %>
-      <!-- Post creation form -->
+      </ul>
     </div>
+  <% end %>
+
+  <div class="field">
+    <%#= form.label :user_id %>
+    <%#= form.number_field :user_id %>
+    <%#= current_user.id %>
+    <%= form.hidden_field :user_id, :value => current_user.id %>
   </div>
-</div>
-<!-- script for validating start and end date -->
-<script>
-  $(function(){
-    if ($(".start_date").val() != "") {
-      $('.end_date').data("DateTimePicker").minDate($(".start_date").val());
-    } else{
-      $('.end_date').datetimepicker({format: 'YYYY-MM-DD',minDate: moment()});
-    }
-    $(".start_date").data("DateTimePicker").minDate(new Date());
-    $(".end_date").data("DateTimePicker").minDate(new Date());
-    $(".start_date").on("dp.change", function (selected) {
-      $(".end_date").data("DateTimePicker").minDate(selected.date);
-    });
-    $(".end_date").on("dp.change", function (selected) {
-      $(".start_date").data("DateTimePicker").maxDate(selected.date);
-    });
-  });
-</script>
-<!-- script for validating start and end date -->
+
+  <div class="field">
+    <%= form.label :topic %>
+    <%= form.text_area :topic %>
+  </div>
+
+  <div class="field">
+    <%= form.label :post_text %>
+    <%= form.text_area :post_text %>
+  </div>
+
+  <div class="field">
+    <%= form.label :attachment %>
+    <%= form.text_area :attachment %>
+  </div>
+
+  <div class="field">
+    <%= form.label :visibility %>
+    <%= form.text_field :visibility %>
+  </div>
+
+  <div class="field">
+    <%= form.label :expiration_date %>
+    <%= form.datetime_select :expiration_date %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
