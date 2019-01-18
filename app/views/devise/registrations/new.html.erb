@@ -54,6 +54,10 @@
              <%= f.text_field :firstname,  autofocus: true, autocomplete: "firstname", class: "form-control input-form-control" %>
           </div>
           <div class="field">
+            <%= f.label :image %><br />
+            <%= f.file_field :image, class: "form-control input-form-control" %><br/>
+          </div>
+          <div class="field">
             <%= f.label :password %>
             <% if @minimum_password_length %>
              <em>(<%= @minimum_password_length %> characters minimum)</em>
